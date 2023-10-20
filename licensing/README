@@ -1,0 +1,41 @@
+sha-512 is useful in validating the license file
+aes, rsa are useful in encrypting and decrypting the data
+
+SHA-512 is a hashing algorithm, and it's not designed for encryption and 
+decryption. It's a one-way function, meaning that it can hash data, but you 
+cannot reverse the process to obtain the original data.
+
+Both AES (Advanced Encryption Standard) and RSA (Rivest–Shamir–Adleman) 
+are widely used encryption algorithms, but they serve different purposes and 
+are not directly comparable in terms of security. Here's a brief comparison:
+
+Symmetric (AES):
+Purpose: AES is a symmetric encryption algorithm, meaning the same key is used 
+for both encryption and decryption.
+Security: AES is considered highly secure when used with a strong key. Common 
+key lengths are 128, 192, or 256 bits.
+Performance: AES is efficient and performs well, making it suitable for 
+encrypting data, files, and communication channels.
+
+Asymmetric (RSA):
+Purpose: RSA is an asymmetric encryption algorithm, which means it uses a 
+public key for encryption and a private key for decryption.
+Security: RSA is also considered secure when used with sufficiently long key 
+lengths, typically 2048 bits or more. However, RSA's security relies on the 
+difficulty of factoring large numbers.
+Use Case: RSA is commonly used for securing communications, digital 
+signatures, and key exchange. It's not typically used for encrypting large 
+amounts of data due to performance concerns.
+
+Which is more secure depends on the context:
+For securing communications, RSA is often used to exchange a symmetric AES 
+key, which is then used to encrypt the actual data. This combination offers 
+both security and efficiency. AES is more suitable for encrypting large 
+volumes of data due to its performance. When used with strong keys, it's 
+considered highly secure.
+
+In summary, both AES and RSA can be secure when used properly with 
+appropriate key lengths. The choice between them depends on your specific use 
+case. For modern applications, AES is often the preferred choice for data 
+encryption due to its efficiency and security, while RSA is used for tasks 
+like key exchange and digital signatures.
