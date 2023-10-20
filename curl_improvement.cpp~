@@ -1,0 +1,72 @@
+#include <string>
+using namespace std;
+using std::string;
+#include <curl/curl.h>
+#include <vector>
+
+size_t writeCallback(char *contents, size_t size, size_t nmemb,
+                     std::string *buffer) {
+  size_t realsize = size * nmemb;
+  if (buffer == NULL) {
+    return 0;
+  }
+  buffer->append(contents, realsize);
+  return realsize;
+}
+
+int main(int argc, char **argv) {
+  std::string buffer;
+
+  // Initialize global.
+  curl_global_init(CURL_GLOBAL_ALL);
+
+  // Start a libcurl easy session.
+  CURL *ch = curl_easy_init();
+  if (!ch) {
+    // Something went wrong
+    curl_global_cleanup();
+    return -1;
+  }
+
+  // These options will only be set once.
+  curl_easy_setopt(ch, CURLOPT_VERBOSE, 0);
+  curl_easy_setopt(ch, CURLOPT_FOLLOWLOCATION, 1);
+  curl_easy_setopt(ch, CURLOPT_USERAGENT, "Crawler");
+  curl_easy_setopt(ch, CURLOPT_WRITEFUNCTION, &writeCallback);
+  curl_easy_setopt(ch, CURLOPT_WRITEDATA, &buffer);
+
+  // Push a couple of URLs onto queue.
+  std::vector<const char *> queue;
+  queue.push_back("http://www.google.com");
+  queue.push_back("http://www.stackoverflow.com");
+
+  const char *url;
+  CURLcode code;
+
+  do {
+    // Grab an URL from the queue.
+    url = queue.back();
+    queue.pop_back();
+
+    // Only change the CURLOPT_URL option for the handle
+    // the rest will stay intact.
+    curl_easy_setopt(ch, CURLOPT_URL, url);
+
+    // Perform transfer.
+    code = curl_easy_perform(ch);
+
+    // Check if everything went fine.
+    if (code != CURLE_OK) {
+      // Handle any errors.
+    }
+
+    // Clear the buffer.
+    buffer.clear();
+  } while (queue.size() > 0);
+
+  // Cleanup.
+  curl_easy_cleanup(ch);
+  curl_global_cleanup();
+
+  return 0;
+}
