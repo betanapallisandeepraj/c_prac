@@ -1,5 +1,5 @@
-#include <gst/gst.h>
 #include <glib.h>
+#include <gst/gst.h>
 
 int main(int argc, char *argv[]) {
   GstElement *pipeline, *source, *sink;
@@ -54,4 +54,3 @@ int main(int argc, char *argv[]) {
 
   return 0;
 }
-

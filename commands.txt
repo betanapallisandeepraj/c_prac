@@ -1,0 +1,5 @@
+gcc -o switch_channel switch_channel.c $(pkg-config --cflags --libs libnl-3.0 libnl-genl-3.0)
+gcc -o server server.c 
+gcc -o client client.c 
+gcc -o server server.c -pthread
+gcc -o client client.c -pthread
